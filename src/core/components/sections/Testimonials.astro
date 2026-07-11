@@ -1,0 +1,57 @@
+---
+import { loadTestimonials } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const testimonials = await loadTestimonials();
+if (testimonials.length === 0) return;
+
+const heading = getSectionHeading('testimonials');
+---
+
+<section class="testimonials section section--alt" id="testimonials" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="testimonials-heading">{heading}</h2>
+    </div>
+    <div class="grid grid--3">
+      {testimonials.map((t) => (
+        <blockquote class="testimonial-card">
+          <p class="testimonial-card__quote">"{t.quote}"</p>
+          <footer class="testimonial-card__author">
+            <strong>{t.name}</strong>
+            {t.role && <span>{t.role}</span>}
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial-card {
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+  }
+
+  .testimonial-card__quote {
+    font-size: var(--text-base);
+    font-style: italic;
+    color: var(--color-text);
+    margin-bottom: var(--space-lg);
+    max-width: none;
+  }
+
+  .testimonial-card__author {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .testimonial-card__author strong {
+    color: var(--color-text);
+  }
+</style>

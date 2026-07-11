@@ -1,0 +1,48 @@
+/* === Menu tier overrides === */
+/* Applied when rendered inside .menu-shell (MenuLayout) */
+
+.menu-shell {
+  --container-max: 480px;
+  --container-padding: 0;
+}
+
+.menu-shell .container {
+  max-width: 100%;
+  padding-inline: var(--space-md);
+}
+
+.menu-shell .section {
+  padding-block: var(--space-xl);
+}
+
+.menu-shell .hero {
+  padding-block: var(--space-2xl);
+}
+
+.menu-shell .section-header {
+  margin-bottom: var(--space-lg);
+}
+
+.menu-shell .gallery__grid {
+  grid-template-columns: 1fr;
+}
+
+.menu-shell .gallery__grid > :first-child {
+  grid-column: 1 / -1;
+}
+
+/* 2x2 grid after first item on menu */
+@media (min-width: 320px) {
+  .menu-shell .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu-shell .gallery__grid > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.menu-shell .footer__inner {
+  flex-direction: column;
+  text-align: center;
+}

@@ -1,0 +1,69 @@
+---
+import '../themes/base.css';
+import '../themes/professional.css';
+import '../themes/artisanal.css';
+import '../themes/bold.css';
+import '../themes/menu.css';
+
+import BaseLayout from '../core/layouts/BaseLayout.astro';
+import MenuLayout from '../core/layouts/MenuLayout.astro';
+import Header from '../core/components/Header.astro';
+import Footer from '../core/components/Footer.astro';
+
+import Hero from '../core/components/sections/Hero.astro';
+import Trust from '../core/components/sections/Trust.astro';
+import About from '../core/components/sections/About.astro';
+import Services from '../core/components/sections/Services.astro';
+import Benefits from '../core/components/sections/Benefits.astro';
+import Process from '../core/components/sections/Process.astro';
+import Testimonials from '../core/components/sections/Testimonials.astro';
+import FAQ from '../core/components/sections/FAQ.astro';
+import Contact from '../core/components/sections/Contact.astro';
+import Gallery from '../core/components/sections/Gallery.astro';
+import ProductMenu from '../core/components/sections/ProductMenu.astro';
+import CategoryNav from '../core/components/sections/CategoryNav.astro';
+import FeaturedProducts from '../core/components/sections/FeaturedProducts.astro';
+import ScheduleCard from '../core/components/sections/ScheduleCard.astro';
+
+import { getManifest } from '../core/utils/manifest';
+import type { SectionId } from '../types/sections';
+
+const manifest = getManifest();
+const isMenu = manifest.project.tier === 'menu';
+
+const sectionComponents: Partial<Record<SectionId, any>> = {
+  hero: Hero,
+  trust: Trust,
+  about: About,
+  services: Services,
+  benefits: Benefits,
+  process: Process,
+  testimonials: Testimonials,
+  faq: FAQ,
+  contact: Contact,
+  gallery: Gallery,
+  'product-menu': ProductMenu,
+  'category-nav': CategoryNav,
+  'featured-products': FeaturedProducts,
+  schedule: ScheduleCard,
+};
+---
+
+{isMenu ? (
+  <MenuLayout manifest={manifest}>
+    {manifest.sections.map(({ id }) => {
+      const Component = sectionComponents[id];
+      return Component ? <Component /> : null;
+    })}
+    <Footer slot="footer" />
+  </MenuLayout>
+) : (
+  <BaseLayout manifest={manifest}>
+    <Header slot="header" />
+    {manifest.sections.map(({ id }) => {
+      const Component = sectionComponents[id];
+      return Component ? <Component /> : null;
+    })}
+    <Footer slot="footer" />
+  </BaseLayout>
+)}

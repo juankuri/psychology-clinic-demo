@@ -1,0 +1,86 @@
+---
+import { loadProducts } from '../../utils/content';
+
+const categories = await loadProducts();
+if (categories.length === 0) return;
+---
+
+<nav class="category-nav" aria-label="Categorías del menú">
+  <div class="category-nav__scroll">
+    {categories.map((cat, i) => (
+      <a
+        href={`#category-${i}`}
+        class:list={['category-nav__chip', { 'category-nav__chip--active': i === 0 }]}
+      >
+        {cat.name}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector('.category-nav');
+  if (nav) {
+    const chips = nav.querySelectorAll('.category-nav__chip');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            chips.forEach((chip) => {
+              chip.classList.toggle(
+                'category-nav__chip--active',
+                chip.getAttribute('href') === `#${id}`
+              );
+            });
+          }
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+    );
+
+    document.querySelectorAll('[id^="category-"]').forEach((el) => observer.observe(el));
+  }
+</script>
+
+<style>
+  .category-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: var(--space-sm);
+  }
+
+  .category-nav__scroll {
+    display: flex;
+    gap: var(--space-sm);
+    overflow-x: auto;
+    padding-inline: var(--space-md);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .category-nav__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-nav__chip {
+    flex-shrink: 0;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-alt);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .category-nav__chip:hover,
+  .category-nav__chip--active {
+    background-color: var(--color-primary);
+    color: white;
+  }
+</style>

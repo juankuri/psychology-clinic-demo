@@ -1,0 +1,61 @@
+---
+import { getManifest } from '../../utils/manifest';
+import WhatsAppCTA from '../ui/WhatsAppCTA.astro';
+
+const manifest = getManifest();
+const { business } = manifest;
+---
+
+<section class="hero section" aria-labelledby="hero-heading">
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <h1 id="hero-heading" class="hero__title">{business.name}</h1>
+      <p class="hero__tagline">{business.tagline}</p>
+      <p class="hero__description">{business.description}</p>
+      <div class="hero__actions">
+        <WhatsAppCTA />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-4xl);
+    background-color: var(--color-bg-alt);
+  }
+
+  .hero__inner {
+    text-align: center;
+  }
+
+  .hero__content {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+
+  .hero__title {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero__tagline {
+    font-size: var(--text-xl);
+    color: var(--color-primary);
+    margin-bottom: var(--space-lg);
+    max-width: none;
+  }
+
+  .hero__description {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin-inline: auto;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+  }
+</style>

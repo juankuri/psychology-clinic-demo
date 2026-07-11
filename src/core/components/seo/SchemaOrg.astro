@@ -1,0 +1,34 @@
+---
+import type { ProjectManifest } from '../../../types/manifest';
+
+interface Props {
+  manifest: ProjectManifest;
+}
+
+const { manifest } = Astro.props;
+const { business, contact, location, social, seo } = manifest;
+
+const schema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': manifest.project.tier === 'menu' ? 'FoodEstablishment' : 'LocalBusiness',
+  name: business.name,
+  description: seo.description,
+  ...(seo.canonicalUrl && { url: seo.canonicalUrl }),
+  ...(business.logo && { logo: business.logo }),
+  ...(contact.phone && { telephone: contact.phone }),
+  ...(contact.email && { email: contact.email }),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: location.address,
+  },
+};
+
+if (social) {
+  const urls = Object.values(social).filter(Boolean);
+  if (urls.length > 0) {
+    schema.sameAs = urls;
+  }
+}
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

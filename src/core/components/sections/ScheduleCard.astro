@@ -1,0 +1,95 @@
+---
+import { loadSchedule } from '../../utils/content';
+import { getManifest, getSectionHeading } from '../../utils/manifest';
+
+const schedule = await loadSchedule();
+const manifest = getManifest();
+const { location } = manifest;
+const heading = getSectionHeading('schedule');
+
+if (schedule.length === 0 && !location.googleMapsUrl) return;
+---
+
+<section class="schedule section" id="schedule" aria-labelledby="schedule-heading">
+  <div class="schedule__inner">
+    {schedule.length > 0 && (
+      <div class="schedule__card">
+        <h2 id="schedule-heading" class="schedule__title">{heading}</h2>
+        <dl class="schedule__list">
+          {schedule.map((entry) => (
+            <div class="schedule__row">
+              <dt class="schedule__day">{entry.day}</dt>
+              <dd class="schedule__hours">{entry.hours}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    )}
+    {location.address && (
+      <div class="schedule__location">
+        <p class="schedule__address">
+          {location.googleMapsUrl ? (
+            <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+              {location.address}
+            </a>
+          ) : (
+            location.address
+          )}
+        </p>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .schedule__inner {
+    padding-inline: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .schedule__card {
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+
+  .schedule__title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .schedule__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .schedule__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: var(--text-sm);
+  }
+
+  .schedule__day {
+    font-weight: 500;
+  }
+
+  .schedule__hours {
+    color: var(--color-text-muted);
+  }
+
+  .schedule__address {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .schedule__address a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+import { getManifest, getSectionHeading, getSectionSubtitle } from '../../utils/manifest';
+import WhatsAppCTA from '../ui/WhatsAppCTA.astro';
+
+const manifest = getManifest();
+const { contact, location } = manifest;
+const heading = getSectionHeading('contact');
+const subtitle = getSectionSubtitle('contact');
+---
+
+<section class="contact section section--alt" id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="contact-heading">{heading}</h2>
+      {subtitle && <p>{subtitle}</p>}
+    </div>
+    <div class="contact__content">
+      <div class="contact__cta">
+        <WhatsAppCTA />
+      </div>
+      <div class="contact__info">
+        {contact.phone && (
+          <p>
+            <strong>Tel:</strong>{' '}
+            <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
+          </p>
+        )}
+        {contact.email && (
+          <p>
+            <strong>Email:</strong>{' '}
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          </p>
+        )}
+        <p>
+          {location.googleMapsUrl ? (
+            <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+              {location.address}
+            </a>
+          ) : (
+            location.address
+          )}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact__content {
+    max-width: 36rem;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .contact__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    font-size: var(--text-base);
+  }
+
+  .contact__info p {
+    max-width: none;
+  }
+
+  .contact__info a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .contact__info a:hover {
+    color: var(--color-text);
+  }
+</style>

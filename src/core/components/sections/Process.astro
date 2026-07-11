@@ -1,0 +1,78 @@
+---
+import { loadProcess } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const steps = await loadProcess();
+if (steps.length === 0) return;
+
+const heading = getSectionHeading('process');
+---
+
+<section class="process section" id="process" aria-labelledby="process-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="process-heading">{heading}</h2>
+    </div>
+    <div class="process__steps">
+      {steps.map((step) => (
+        <div class="process__step">
+          <span class="process__number">{step.step}</span>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process__steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 640px) {
+    .process__steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .process__steps {
+      grid-template-columns: repeat(4, 1fr);
+      max-width: none;
+    }
+  }
+
+  .process__step {
+    text-align: center;
+  }
+
+  .process__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 700;
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-md);
+  }
+
+  .process__step h3 {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-sm);
+  }
+
+  .process__step p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin-inline: auto;
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import type { ProjectManifest } from '../../../types/manifest';
+
+interface Props {
+  manifest: ProjectManifest;
+}
+
+const { manifest } = Astro.props;
+const { seo } = manifest;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+{seo.canonicalUrl && <link rel="canonical" href={seo.canonicalUrl} />}
+
+<!-- Open Graph -->
+<meta property="og:title" content={seo.title} />
+<meta property="og:description" content={seo.description} />
+<meta property="og:type" content="website" />
+{seo.canonicalUrl && <meta property="og:url" content={seo.canonicalUrl} />}
+{seo.ogImage && <meta property="og:image" content={seo.ogImage} />}
+{seo.locale && <meta property="og:locale" content={seo.locale} />}
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Theme color -->
+{manifest.theme.tokens?.colorPrimary && (
+  <meta name="theme-color" content={manifest.theme.tokens.colorPrimary} />
+)}

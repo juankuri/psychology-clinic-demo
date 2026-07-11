@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Ana G.",
+    "role": "Paciente",
+    "quote": "[DEMO] La terapia me ayudó a entender mis patrones de ansiedad y a desarrollar herramientas reales para mi día a día."
+  },
+  {
+    "name": "Carlos M.",
+    "role": "Paciente",
+    "quote": "[DEMO] Después de meses sintiéndome estancado, las sesiones con la Dra. López me dieron claridad y dirección."
+  },
+  {
+    "name": "Laura y Pedro",
+    "role": "Terapia de pareja",
+    "quote": "[DEMO] Aprendimos a comunicarnos de verdad. Nuestra relación mejoró mucho desde que empezamos la terapia."
+  }
+]

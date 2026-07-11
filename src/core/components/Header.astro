@@ -1,0 +1,174 @@
+---
+import { getManifest, getNavLabel } from '../utils/manifest';
+
+const manifest = getManifest();
+const { business, sections } = manifest;
+
+const navSections = sections
+  .filter((s) => s.id !== 'hero' && s.id !== 'trust')
+  .map((s) => ({
+    id: s.id,
+    label: getNavLabel(s.id),
+  }));
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="header__brand" aria-label={`${business.name} — Inicio`}>
+      {business.logo ? (
+        <img src={business.logo} alt={business.name} class="header__logo" width="40" height="40" />
+      ) : (
+        <span class="header__name">{business.name}</span>
+      )}
+    </a>
+
+    <button
+      class="header__toggle"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      aria-label="Menu"
+    >
+      <span class="header__toggle-bar"></span>
+      <span class="header__toggle-bar"></span>
+      <span class="header__toggle-bar"></span>
+    </button>
+
+    <nav class="header__nav" id="main-nav" aria-label="Navigation">
+      {navSections.map((item) => (
+        <a href={`#${item.id}`} class="header__link">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('.header__toggle');
+  const nav = document.querySelector('.header__nav');
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      nav.classList.toggle('header__nav--open');
+    });
+
+    nav.querySelectorAll('.header__link').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        nav.classList.remove('header__nav--open');
+      });
+    });
+  }
+</script>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    padding-block: var(--space-md);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .header__brand {
+    flex-shrink: 0;
+  }
+
+  .header__logo {
+    height: 2.5rem;
+    width: auto;
+  }
+
+  .header__name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-lg);
+  }
+
+  .header__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: var(--space-sm);
+    cursor: pointer;
+  }
+
+  .header__toggle-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text);
+    border-radius: 1px;
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .header__toggle[aria-expanded='true'] .header__toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .header__toggle[aria-expanded='true'] .header__toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .header__toggle[aria-expanded='true'] .header__toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .header__nav {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-sm);
+    width: 100%;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-base);
+  }
+
+  .header__nav--open {
+    display: flex;
+  }
+
+  .header__link {
+    color: var(--color-text-muted);
+    padding: var(--space-sm) 0;
+    transition: color var(--transition-fast);
+  }
+
+  .header__link:hover {
+    color: var(--color-primary);
+  }
+
+  @media (min-width: 768px) {
+    .header__toggle {
+      display: none;
+    }
+
+    .header__nav {
+      display: flex;
+      flex-direction: row;
+      width: auto;
+      padding-top: 0;
+      border-top: none;
+      gap: var(--space-lg);
+      font-size: var(--text-sm);
+    }
+
+    .header__link {
+      padding: 0;
+    }
+  }
+</style>

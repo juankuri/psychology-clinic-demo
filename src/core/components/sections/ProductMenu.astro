@@ -1,0 +1,130 @@
+---
+import { loadProducts } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const categories = await loadProducts();
+if (categories.length === 0) return;
+
+const heading = getSectionHeading('product-menu');
+---
+
+<section class="product-menu section" id="product-menu" aria-labelledby="menu-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="menu-heading">{heading}</h2>
+    </div>
+    {categories.map((category, i) => (
+      <div class="menu-category" id={`category-${i}`}>
+        <h3 class="menu-category__name">{category.name}</h3>
+        {category.description && (
+          <p class="menu-category__desc">{category.description}</p>
+        )}
+        {category.note && (
+          <p class="menu-category__note">{category.note}</p>
+        )}
+        <ul class="menu-category__list" role="list">
+          {category.products.map((product) => (
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <span class="menu-item__name">
+                  {product.name}
+                  {product.badge && (
+                    <span class="menu-item__badge">{product.badge}</span>
+                  )}
+                </span>
+                {product.description && (
+                  <span class="menu-item__desc">{product.description}</span>
+                )}
+              </div>
+              <span class="menu-item__price">{product.price}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .menu-category {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .menu-category:last-child {
+    margin-bottom: 0;
+  }
+
+  .menu-category__name {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+  }
+
+  .menu-category__desc {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .menu-category__note {
+    font-size: var(--text-sm);
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .menu-category__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
+  }
+
+  .menu-item__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .menu-item__name {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .menu-item__badge {
+    display: inline-block;
+    padding: 1px var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .menu-item__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .menu-item__price {
+    font-weight: 700;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+</style>

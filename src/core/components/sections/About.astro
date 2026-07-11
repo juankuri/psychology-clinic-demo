@@ -1,0 +1,33 @@
+---
+import { loadAbout } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const paragraphs = await loadAbout();
+if (paragraphs.length === 0) return;
+
+const heading = getSectionHeading('about');
+---
+
+<section class="about section section--alt" id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="about-heading">{heading}</h2>
+    </div>
+    <div class="about__content">
+      {paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__content {
+    max-width: 65ch;
+    margin-inline: auto;
+    text-align: center;
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+</style>

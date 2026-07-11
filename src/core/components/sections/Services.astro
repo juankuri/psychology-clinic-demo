@@ -1,0 +1,44 @@
+---
+import { loadServices } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const services = await loadServices();
+if (services.length === 0) return;
+
+const heading = getSectionHeading('services');
+---
+
+<section class="services section" id="services" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="services-heading">{heading}</h2>
+    </div>
+    <div class="grid grid--2">
+      {services.map((service) => (
+        <div class="service-card">
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-card {
+    padding: var(--space-xl);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+  }
+
+  .service-card h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
+    color: var(--color-primary);
+  }
+
+  .service-card p {
+    color: var(--color-text-muted);
+  }
+</style>

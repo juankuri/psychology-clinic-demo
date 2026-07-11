@@ -1,0 +1,15 @@
+/* Warm Artisanal theme
+   Rounded, inviting, warm tones.
+   Serif heading, soft shapes. */
+
+:root[data-theme='artisanal'] {
+  --font-heading: Georgia, 'Times New Roman', serif;
+  --font-body: Georgia, 'Times New Roman', serif;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --color-bg-alt: #faf6f1;
+  --color-border: #e8ddd0;
+}

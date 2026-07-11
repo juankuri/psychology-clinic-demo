@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Tacos",
+    "description": "Nuestros tacos clásicos",
+    "products": [
+      { "name": "Taco al pastor", "price": "$25", "description": "Con piña, cebolla y cilantro" },
+      { "name": "Taco de bistec", "price": "$30", "description": "Carne asada con guacamole" },
+      { "name": "Taco de suadero", "price": "$25", "description": "Suadero jugoso con salsa verde" },
+      { "name": "Taco de carnitas", "price": "$28", "description": "Carnitas estilo Michoacán" }
+    ]
+  },
+  {
+    "name": "Bebidas",
+    "products": [
+      { "name": "Agua de horchata", "price": "$20" },
+      { "name": "Agua de jamaica", "price": "$20" },
+      { "name": "Refresco", "price": "$25" },
+      { "name": "Cerveza", "price": "$35" }
+    ]
+  }
+]

@@ -1,0 +1,39 @@
+---
+import type { ProjectManifest } from '../../types/manifest';
+import Head from '../components/seo/Head.astro';
+import SchemaOrg from '../components/seo/SchemaOrg.astro';
+
+interface Props {
+  manifest: ProjectManifest;
+}
+
+const { manifest } = Astro.props;
+const { theme } = manifest;
+
+// Build inline CSS for token overrides
+const tokenOverrides = theme.tokens
+  ? Object.entries(theme.tokens)
+      .filter(([, v]) => v !== undefined)
+      .map(([key, value]) => {
+        const cssVar = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+        return `--${cssVar}: ${value}`;
+      })
+      .join('; ')
+  : '';
+---
+
+<!doctype html>
+<html lang={manifest.seo.locale?.split('-')[0] ?? 'es'} data-theme={theme.preset}>
+  <head>
+    <Head manifest={manifest} />
+    <SchemaOrg manifest={manifest} />
+  </head>
+  <body style={tokenOverrides || undefined}>
+    <a class="skip-link" href="#main-content">Ir al contenido principal</a>
+    <slot name="header" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

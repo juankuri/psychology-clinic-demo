@@ -1,0 +1,22 @@
+[
+  {
+    "step": 1,
+    "title": "Contacto inicial",
+    "description": "Escríbeme por WhatsApp para agendar tu primera sesión."
+  },
+  {
+    "step": 2,
+    "title": "Primera sesión",
+    "description": "Nos conocemos, entiendo tu situación y definimos objetivos juntos."
+  },
+  {
+    "step": 3,
+    "title": "Plan de tratamiento",
+    "description": "Diseño un plan personalizado con las técnicas más adecuadas para ti."
+  },
+  {
+    "step": 4,
+    "title": "Sesiones regulares",
+    "description": "Trabajamos juntos sesión a sesión hacia tus objetivos de bienestar."
+  }
+]

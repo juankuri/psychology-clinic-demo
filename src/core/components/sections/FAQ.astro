@@ -1,0 +1,72 @@
+---
+import { loadFAQ } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const items = await loadFAQ();
+if (items.length === 0) return;
+
+const heading = getSectionHeading('faq');
+---
+
+<section class="faq section" id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="section-header">
+      <h2 id="faq-heading">{heading}</h2>
+    </div>
+    <div class="faq__list">
+      {items.map((item) => (
+        <details class="faq__item">
+          <summary class="faq__question">{item.question}</summary>
+          <p class="faq__answer">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__list {
+    max-width: 48rem;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .faq__item {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .faq__question {
+    padding: var(--space-lg);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq__question::after {
+    content: '+';
+    font-size: var(--text-xl);
+    color: var(--color-primary);
+    transition: transform var(--transition-fast);
+  }
+
+  .faq__item[open] .faq__question::after {
+    content: '\2212';
+  }
+
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__answer {
+    padding: 0 var(--space-lg) var(--space-lg);
+    color: var(--color-text-muted);
+    max-width: none;
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+import { loadProducts } from '../../utils/content';
+import { getSectionHeading } from '../../utils/manifest';
+
+const categories = await loadProducts();
+const featured = categories
+  .flatMap((cat) => cat.products)
+  .filter((p) => p.featured);
+
+if (featured.length === 0) return;
+
+const heading = getSectionHeading('featured-products');
+---
+
+<section class="featured section" aria-labelledby="featured-heading">
+  <div class="featured__header">
+    <h2 id="featured-heading" class="featured__title">{heading}</h2>
+  </div>
+  <div class="featured__scroll">
+    {featured.map((product) => (
+      <div class="featured__card">
+        {product.image && (
+          <img
+            src={product.image}
+            alt={product.name}
+            class="featured__img"
+            loading="lazy"
+            decoding="async"
+            width="200"
+            height="200"
+          />
+        )}
+        <div class="featured__info">
+          {product.badge && (
+            <span class="featured__badge">{product.badge}</span>
+          )}
+          <span class="featured__name">{product.name}</span>
+          <span class="featured__price">{product.price}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .featured {
+    padding-block: var(--space-xl);
+  }
+
+  .featured__header {
+    padding-inline: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .featured__title {
+    font-size: var(--text-xl);
+  }
+
+  .featured__scroll {
+    display: flex;
+    gap: var(--space-md);
+    overflow-x: auto;
+    padding-inline: var(--space-md);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .featured__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featured__card {
+    flex-shrink: 0;
+    width: 160px;
+    scroll-snap-align: start;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background-color: var(--color-bg-alt);
+  }
+
+  .featured__img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  .featured__info {
+    padding: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .featured__badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 2px var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: var(--color-primary);
+    color: white;
+  }
+
+  .featured__name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    line-height: 1.3;
+  }
+
+  .featured__price {
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+  }
+</style>
