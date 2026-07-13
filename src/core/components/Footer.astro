@@ -2,62 +2,111 @@
 import { getManifest } from '../utils/manifest';
 
 const manifest = getManifest();
-const { business, social, labels } = manifest;
+const { business, social, location, labels } = manifest;
 const year = new Date().getFullYear();
-const footerText = labels?.footer ?? `\u00A9 ${year} ${business.name}`;
+const footerText = labels?.footer ?? `© ${year} ${business.name}`;
 
 const socialEntries = social ? Object.entries(social).filter(([, url]) => url) : [];
 ---
 
 <footer class="footer">
   <div class="container footer__inner">
-    <p class="footer__copy" set:html={footerText} />
+    <div class="footer__brand">
+      {business.logo && <img src={business.logo} alt="" class="footer__logo" width="28" height="28" aria-hidden="true" />}
+      <div>
+        <p class="footer__name">{business.name}</p>
+        <p class="footer__blurb">{business.tagline}</p>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <span class="footer__heading">Contacto</span>
+      <address class="footer__address">{location.address}</address>
+    </div>
+
     {socialEntries.length > 0 && (
-      <nav class="footer__social" aria-label="Redes sociales">
-        {socialEntries.map(([platform, url]) => (
-          <a href={url} target="_blank" rel="noopener noreferrer" aria-label={platform}>
-            {platform.charAt(0).toUpperCase() + platform.slice(1)}
-          </a>
-        ))}
-      </nav>
+      <div class="footer__col">
+        <span class="footer__heading">Redes</span>
+        <nav class="footer__social" aria-label="Redes sociales">
+          {socialEntries.map(([platform, url]) => (
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              {platform.charAt(0).toUpperCase() + platform.slice(1)}
+            </a>
+          ))}
+        </nav>
+      </div>
     )}
+  </div>
+  <div class="container footer__bottom">
+    <p set:html={footerText} />
+    <p>Hecho con calidez.</p>
   </div>
 </footer>
 
 <style>
   .footer {
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--color-border);
+    background: var(--color-dark, #2b2822);
+    color: color-mix(in srgb, var(--color-bg, #fff) 70%, transparent);
+    padding-block: var(--space-3xl) var(--space-xl);
     font-size: var(--text-sm);
-    color: var(--color-text-muted);
   }
 
   .footer__inner {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-md);
-    text-align: center;
+    flex-wrap: wrap;
+    gap: var(--space-xl) var(--space-3xl);
+    justify-content: space-between;
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  @media (min-width: 640px) {
-    .footer__inner {
-      flex-direction: row;
-      justify-content: space-between;
-    }
+  .footer__brand {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    max-width: 22rem;
+  }
+
+  .footer__name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    color: var(--color-bg, #fff);
+  }
+
+  .footer__blurb {
+    margin-top: 2px;
+  }
+
+  .footer__heading {
+    display: block;
+    color: var(--color-bg, #fff);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer__address {
+    font-style: normal;
+    max-width: 18rem;
+    line-height: 1.5;
   }
 
   .footer__social {
     display: flex;
-    gap: var(--space-lg);
-  }
-
-  .footer__social a {
-    color: var(--color-text-muted);
-    transition: color var(--transition-fast);
+    flex-direction: column;
+    gap: var(--space-xs);
   }
 
   .footer__social a:hover {
-    color: var(--color-primary);
+    color: var(--color-bg, #fff);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
+    justify-content: space-between;
+    padding-top: var(--space-lg);
+    color: color-mix(in srgb, var(--color-bg, #fff) 55%, transparent);
   }
 </style>

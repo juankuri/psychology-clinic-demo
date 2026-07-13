@@ -1,57 +1,113 @@
 ---
 import { loadTestimonials } from '../../utils/content';
-import { getSectionHeading } from '../../utils/manifest';
+import { getSectionHeading, getSectionSubtitle } from '../../utils/manifest';
 
 const testimonials = await loadTestimonials();
 if (testimonials.length === 0) return;
 
 const heading = getSectionHeading('testimonials');
+const subtitle = getSectionSubtitle('testimonials');
 ---
 
-<section class="testimonials section section--alt" id="testimonials" aria-labelledby="testimonials-heading">
+<section class="testimonials section" id="testimonials" aria-labelledby="testimonials-heading">
   <div class="container">
-    <div class="section-header">
+    <div class="section-lead section-lead--center">
+      <span class="eyebrow">Historias de acompañamiento</span>
       <h2 id="testimonials-heading">{heading}</h2>
     </div>
-    <div class="grid grid--3">
+    <div class="testimonials__grid">
       {testimonials.map((t) => (
-        <blockquote class="testimonial-card">
-          <p class="testimonial-card__quote">"{t.quote}"</p>
-          <footer class="testimonial-card__author">
-            <strong>{t.name}</strong>
-            {t.role && <span>{t.role}</span>}
-          </footer>
-        </blockquote>
+        <figure class="quote">
+          <span class="quote__rule" aria-hidden="true"></span>
+          <blockquote class="quote__text">{t.quote}</blockquote>
+          <figcaption class="quote__author">
+            <span class="quote__avatar" aria-hidden="true">{t.name.trim().charAt(0)}</span>
+            <span class="quote__meta">
+              <strong>{t.name}</strong>
+              {t.role && <span>{t.role}</span>}
+            </span>
+          </figcaption>
+        </figure>
       ))}
     </div>
+    {subtitle && <p class="testimonials__note">{subtitle}</p>}
   </div>
 </section>
 
 <style>
-  .testimonial-card {
-    padding: var(--space-xl);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    background: var(--color-bg);
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
   }
 
-  .testimonial-card__quote {
-    font-size: var(--text-base);
-    font-style: italic;
-    color: var(--color-text);
-    margin-bottom: var(--space-lg);
-    max-width: none;
+  @media (min-width: 720px) {
+    .testimonials__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
-  .testimonial-card__author {
+  .quote {
+    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--space-lg);
+  }
+
+  .quote__rule {
+    width: 44px;
+    height: 3px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+  }
+
+  .quote__text {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    font-size: var(--text-xl);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    max-width: 34ch;
+    margin: 0;
+  }
+
+  .quote__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: auto;
+  }
+
+  .quote__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    background: var(--color-sage);
+    color: #fff;
+    font-weight: 700;
+    flex: none;
+  }
+
+  .quote__meta {
+    display: flex;
+    flex-direction: column;
     font-size: var(--text-sm);
     color: var(--color-text-muted);
   }
 
-  .testimonial-card__author strong {
+  .quote__meta strong {
     color: var(--color-text);
+    font-size: var(--text-base);
+  }
+
+  .testimonials__note {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-align: center;
   }
 </style>

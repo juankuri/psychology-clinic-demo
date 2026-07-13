@@ -3,6 +3,13 @@ export interface BusinessIdentity {
   tagline: string;
   description: string;
   logo?: string;
+  /** Short locality shown as the hero eyebrow, e.g. "Ciudad del Carmen, Campeche". */
+  locality?: string;
+  /**
+   * Marketing headline for the hero. Wrap a word/phrase in *asterisks* to
+   * render it as an italic serif accent. Falls back to `name` when omitted.
+   */
+  heroTitle?: string;
 }
 
 export interface WhatsAppConfig {

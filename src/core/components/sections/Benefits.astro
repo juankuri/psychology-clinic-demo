@@ -1,23 +1,27 @@
 ---
 import { loadBenefits } from '../../utils/content';
-import { getSectionHeading } from '../../utils/manifest';
+import { getSectionHeading, getSectionSubtitle } from '../../utils/manifest';
 
 const benefits = await loadBenefits();
 if (benefits.length === 0) return;
 
 const heading = getSectionHeading('benefits');
+const subtitle = getSectionSubtitle('benefits');
 ---
 
 <section class="benefits section section--alt" id="benefits" aria-labelledby="benefits-heading">
   <div class="container">
-    <div class="section-header">
+    <div class="section-lead section-lead--center">
+      <span class="eyebrow">Por qué elegir este espacio</span>
       <h2 id="benefits-heading">{heading}</h2>
+      {subtitle && <p class="section-lead__sub">{subtitle}</p>}
     </div>
-    <div class="grid grid--2">
-      {benefits.map((benefit) => (
-        <div class="benefit-card">
-          <h3>{benefit.title}</h3>
-          <p>{benefit.description}</p>
+    <div class="benefits__grid">
+      {benefits.map((benefit, i) => (
+        <div class="benefit">
+          <span class="benefit__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="benefit__title">{benefit.title}</h3>
+          <p class="benefit__desc">{benefit.description}</p>
         </div>
       ))}
     </div>
@@ -25,19 +29,39 @@ const heading = getSectionHeading('benefits');
 </section>
 
 <style>
-  .benefit-card {
-    padding: var(--space-xl);
-    text-align: center;
+  .benefits__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 5vw, 4rem);
   }
 
-  .benefit-card h3 {
-    font-size: var(--text-lg);
-    margin-bottom: var(--space-sm);
+  @media (min-width: 640px) {
+    .benefits__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .benefit {
+    padding-top: var(--space-lg);
+    border-top: 2px solid var(--color-primary);
+  }
+
+  .benefit__num {
+    display: block;
+    font-weight: 700;
+    font-size: var(--text-sm);
     color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: var(--space-sm);
   }
 
-  .benefit-card p {
+  .benefit__title {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-xs);
+  }
+
+  .benefit__desc {
     color: var(--color-text-muted);
-    margin-inline: auto;
+    max-width: 44ch;
   }
 </style>

@@ -1,7 +1,5 @@
 # Sobre mí
 
-Soy la Dra. María López, psicóloga clínica con más de 10 años de experiencia acompañando a personas en su camino hacia el bienestar emocional.
+Soy psicóloga clínica y educativa. Mi trabajo une dos mundos: la terapia individual y el acompañamiento a la infancia, la adolescencia y las familias, con una mirada respetuosa hacia la neurodivergencia.
 
-[DEMO] Mi enfoque combina la terapia cognitivo-conductual con técnicas de mindfulness, adaptando cada proceso a las necesidades únicas de cada paciente.
-
-[DEMO] Creo firmemente que buscar ayuda profesional es un acto de valentía. Mi consultorio es un espacio seguro donde puedes explorar tus emociones, entender tus patrones y desarrollar herramientas para una vida más plena.
+Creo en un espacio donde puedas comprenderte, sanar y crecer a tu propio ritmo, sin prisas ni juicios. Aquí no hay una versión "correcta" de ti que debas alcanzar: hay un proceso que hacemos juntos.

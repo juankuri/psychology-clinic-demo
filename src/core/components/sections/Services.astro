@@ -1,44 +1,160 @@
 ---
 import { loadServices } from '../../utils/content';
-import { getSectionHeading } from '../../utils/manifest';
+import { getSectionHeading, getSectionSubtitle, getWhatsAppUrlFor } from '../../utils/manifest';
 
 const services = await loadServices();
 if (services.length === 0) return;
 
 const heading = getSectionHeading('services');
+const subtitle = getSectionSubtitle('services');
 ---
 
 <section class="services section" id="services" aria-labelledby="services-heading">
   <div class="container">
-    <div class="section-header">
+    <div class="section-lead">
+      <span class="eyebrow">Servicios</span>
       <h2 id="services-heading">{heading}</h2>
+      {subtitle && <p class="section-lead__sub">{subtitle}</p>}
     </div>
-    <div class="grid grid--2">
-      {services.map((service) => (
-        <div class="service-card">
-          <h3>{service.title}</h3>
-          <p>{service.description}</p>
-        </div>
+
+    <ul class="rows">
+      {services.map((service, i) => (
+        <li class="row">
+          <a
+            class="row__link"
+            href={getWhatsAppUrlFor(`Hola, quiero información sobre ${service.title}.`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${service.title} — quiero información por WhatsApp`}
+          >
+            <span class="row__index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="row__body">
+              <span class="row__title">{service.title}</span>
+              <span class="row__desc">{service.description}</span>
+            </span>
+            <span class="row__cta">
+              <span class="row__cta-text">Quiero información</span>
+              <span class="row__arrow" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </span>
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </section>
 
 <style>
-  .service-card {
-    padding: var(--space-xl);
-    border: 1px solid var(--color-border);
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .row__link {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(1.25rem, 2.5vw, 1.9rem) clamp(1rem, 2.5vw, 1.75rem);
     border-radius: var(--radius-md);
-    background: var(--color-bg);
+    border: 1px solid transparent;
+    border-bottom-color: var(--color-border);
+    transition: background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
   }
 
-  .service-card h3 {
-    font-size: var(--text-xl);
-    margin-bottom: var(--space-sm);
+  .row__link:hover,
+  .row__link:focus-visible {
+    background: var(--color-bg-warm);
+    border-color: var(--color-border);
+    transform: translateX(4px);
+    outline: none;
+  }
+
+  .row__index {
+    align-self: start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-alt);
     color: var(--color-primary);
+    font-weight: 700;
+    font-size: var(--text-base);
+    font-variant-numeric: tabular-nums;
+    transition: background var(--transition-base), color var(--transition-base);
   }
 
-  .service-card p {
+  .row__link:hover .row__index {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .row__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .row__title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+  }
+
+  .row__desc {
     color: var(--color-text-muted);
+    max-width: 56ch;
+  }
+
+  .row__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-wa-dark);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  .row__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: none;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-alt);
+    color: var(--color-wa-dark);
+    transition: background var(--transition-base), color var(--transition-base), transform var(--transition-base);
+  }
+
+  .row__link:hover .row__arrow {
+    background: var(--color-wa);
+    color: #fff;
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 680px) {
+    .row__link {
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 1rem;
+    }
+    .row__cta {
+      grid-column: 2;
+      margin-top: 0.25rem;
+    }
+    .row__title {
+      font-size: var(--text-xl);
+    }
   }
 </style>

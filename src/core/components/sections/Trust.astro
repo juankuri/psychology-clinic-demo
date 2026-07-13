@@ -5,43 +5,49 @@ const items = await loadTrust();
 if (items.length === 0) return;
 ---
 
-<section class="trust section" aria-label="Indicadores de confianza">
-  <div class="container">
-    <div class="trust__items">
-      {items.map((item) => (
-        <div class="trust__item">
-          <strong>{item.value}</strong>
-          <span>{item.label}</span>
-        </div>
-      ))}
-    </div>
+<section class="trust" aria-label="Indicadores de confianza">
+  <div class="container trust__items">
+    {items.map((item) => (
+      <div class="trust__item">
+        <span class="trust__dot" aria-hidden="true"></span>
+        <span>{item.value && <strong>{item.value}</strong>} {item.label}</span>
+      </div>
+    ))}
   </div>
 </section>
 
 <style>
   .trust {
-    padding-block: var(--space-xl);
-    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-alt);
+    border-block: 1px solid var(--color-border);
+    padding-block: var(--space-lg);
   }
 
   .trust__items {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: var(--space-xl);
-    text-align: center;
+    gap: var(--space-md) var(--space-2xl);
   }
 
   .trust__item {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
+    align-items: center;
+    gap: var(--space-sm);
     font-size: var(--text-sm);
     color: var(--color-text-muted);
   }
 
   .trust__item strong {
-    font-size: var(--text-lg);
-    color: var(--color-primary);
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .trust__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+    flex: none;
   }
 </style>

@@ -1,6 +1,8 @@
 ---
 import { loadAbout } from '../../utils/content';
 import { getSectionHeading } from '../../utils/manifest';
+import ImageSlot from '../ui/ImageSlot.astro';
+import WhatsAppCTA from '../ui/WhatsAppCTA.astro';
 
 const paragraphs = await loadAbout();
 if (paragraphs.length === 0) return;
@@ -8,26 +10,65 @@ if (paragraphs.length === 0) return;
 const heading = getSectionHeading('about');
 ---
 
-<section class="about section section--alt" id="about" aria-labelledby="about-heading">
-  <div class="container">
-    <div class="section-header">
-      <h2 id="about-heading">{heading}</h2>
+<section class="about section" id="about" aria-labelledby="about-heading">
+  <div class="container about__grid">
+    <div class="about__media">
+      <ImageSlot name="about" ratio="4 / 5" maxWidth="340px" align="start" class="about__image" />
     </div>
-    <div class="about__content">
-      {paragraphs.map((p) => <p>{p}</p>)}
+    <div class="about__body">
+      <span class="eyebrow">Sobre mí</span>
+      <h2 id="about-heading" class="about__heading">{heading}</h2>
+      <div class="about__content">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+      <WhatsAppCTA class="btn--wa" label="Conóceme por WhatsApp" />
     </div>
   </div>
 </section>
 
 <style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 860px) {
+    .about__grid {
+      grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    }
+  }
+
+  .about__image {
+    box-shadow: var(--shadow-md);
+  }
+
+  .about__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .about__heading {
+    font-size: var(--text-3xl);
+    margin-block: var(--space-md) var(--space-lg);
+    max-width: 18ch;
+  }
+
   .about__content {
-    max-width: 65ch;
-    margin-inline: auto;
-    text-align: center;
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+
+  .about__content p {
+    max-width: 54ch;
+  }
+
+  .about__body :global(.btn) {
+    margin-top: var(--space-xl);
   }
 </style>

@@ -1,61 +1,97 @@
 ---
 import { getManifest } from '../../utils/manifest';
 import WhatsAppCTA from '../ui/WhatsAppCTA.astro';
+import ImageSlot from '../ui/ImageSlot.astro';
 
 const manifest = getManifest();
 const { business } = manifest;
+
+const rawTitle = business.heroTitle ?? business.name;
+// Split on *emphasis* markers into { text, accent } segments.
+const segments = rawTitle.split(/(\*[^*]+\*)/).filter(Boolean).map((part) => {
+  const accent = part.startsWith('*') && part.endsWith('*');
+  return { text: accent ? part.slice(1, -1) : part, accent };
+});
 ---
 
-<section class="hero section" aria-labelledby="hero-heading">
+<section class="hero section" id="top" aria-labelledby="hero-heading">
   <div class="container hero__inner">
     <div class="hero__content">
-      <h1 id="hero-heading" class="hero__title">{business.name}</h1>
-      <p class="hero__tagline">{business.tagline}</p>
+      {business.locality && (
+        <span class="eyebrow hero__eyebrow">{business.locality}</span>
+      )}
+      <h1 id="hero-heading" class="hero__title">
+        {segments.map((s) => (s.accent ? <span class="accent">{s.text}</span> : <span>{s.text}</span>))}
+      </h1>
       <p class="hero__description">{business.description}</p>
       <div class="hero__actions">
-        <WhatsAppCTA />
+        <WhatsAppCTA class="btn--wa" />
+        <a href="#services" class="hero__secondary">Conoce los servicios →</a>
       </div>
+    </div>
+    <div class="hero__media">
+      <ImageSlot name="hero" ratio="4 / 5" loading="eager" class="hero__image" />
     </div>
   </div>
 </section>
 
 <style>
   .hero {
+    background: radial-gradient(120% 90% at 85% 0%, var(--color-bg-warm, var(--color-bg-alt)) 0%, var(--color-bg) 55%);
     padding-block: var(--space-4xl);
-    background-color: var(--color-bg-alt);
   }
 
   .hero__inner {
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
   }
 
   .hero__content {
-    max-width: 42rem;
-    margin-inline: auto;
+    flex: 1 1 360px;
+    min-width: min(100%, 340px);
+  }
+
+  .hero__eyebrow {
+    margin-bottom: var(--space-lg);
   }
 
   .hero__title {
     font-size: var(--text-4xl);
-    margin-bottom: var(--space-sm);
-  }
-
-  .hero__tagline {
-    font-size: var(--text-xl);
-    color: var(--color-primary);
+    line-height: 1.04;
     margin-bottom: var(--space-lg);
-    max-width: none;
   }
 
   .hero__description {
     font-size: var(--text-lg);
     color: var(--color-text-muted);
-    margin-inline: auto;
+    max-width: 32ch;
     margin-bottom: var(--space-xl);
   }
 
   .hero__actions {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-md);
+  }
+
+  .hero__secondary {
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .hero__secondary:hover {
+    color: var(--color-primary);
+  }
+
+  .hero__media {
+    flex: 1 1 340px;
+    min-width: min(100%, 320px);
+  }
+
+  .hero__image {
+    box-shadow: var(--shadow-lg);
   }
 </style>

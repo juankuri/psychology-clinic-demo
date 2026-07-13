@@ -1,78 +1,103 @@
 ---
 import { loadProcess } from '../../utils/content';
-import { getSectionHeading } from '../../utils/manifest';
+import { getSectionHeading, getSectionSubtitle } from '../../utils/manifest';
+import WhatsAppCTA from '../ui/WhatsAppCTA.astro';
 
 const steps = await loadProcess();
 if (steps.length === 0) return;
 
 const heading = getSectionHeading('process');
+const subtitle = getSectionSubtitle('process');
 ---
 
-<section class="process section" id="process" aria-labelledby="process-heading">
+<section class="process section section--dark" id="process" aria-labelledby="process-heading">
   <div class="container">
-    <div class="section-header">
+    <div class="section-lead process__lead">
+      <span class="eyebrow">Cómo es empezar</span>
       <h2 id="process-heading">{heading}</h2>
+      {subtitle && <p class="section-lead__sub">{subtitle}</p>}
     </div>
-    <div class="process__steps">
+
+    <ol class="flow">
       {steps.map((step) => (
-        <div class="process__step">
-          <span class="process__number">{step.step}</span>
-          <h3>{step.title}</h3>
-          <p>{step.description}</p>
-        </div>
+        <li class="flow__step">
+          <div class="flow__marker">
+            <span class="flow__num">{step.step}</span>
+          </div>
+          <h3 class="flow__title">{step.title}</h3>
+          <p class="flow__desc">{step.description}</p>
+        </li>
       ))}
-    </div>
+    </ol>
+
+    <WhatsAppCTA class="btn--wa process__cta" label="Escríbeme y resolvemos tus dudas" />
   </div>
 </section>
 
 <style>
-  .process__steps {
+  .process__lead .eyebrow {
+    color: var(--color-accent-soft);
+  }
+
+  .process__lead .eyebrow::before {
+    background: var(--color-accent);
+  }
+
+  .process__lead .section-lead__sub {
+    color: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  }
+
+  .flow {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-xl);
-    max-width: 48rem;
-    margin-inline: auto;
   }
 
-  @media (min-width: 640px) {
-    .process__steps {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 720px) {
+    .flow {
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
     }
   }
 
-  @media (min-width: 1024px) {
-    .process__steps {
-      grid-template-columns: repeat(4, 1fr);
-      max-width: none;
-    }
+  .flow__step {
+    display: flex;
+    flex-direction: column;
   }
 
-  .process__step {
-    text-align: center;
+  .flow__marker {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
   }
 
-  .process__number {
+  .flow__num {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
+    flex: none;
     border-radius: var(--radius-full);
-    background-color: var(--color-primary);
-    color: white;
+    background: var(--color-primary);
+    color: #fff;
     font-weight: 700;
     font-size: var(--text-lg);
-    margin-bottom: var(--space-md);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-primary) 20%, transparent);
   }
 
-  .process__step h3 {
+  .flow__title {
     font-size: var(--text-lg);
     margin-bottom: var(--space-sm);
   }
 
-  .process__step p {
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-    margin-inline: auto;
+  .flow__desc {
+    color: color-mix(in srgb, var(--color-bg) 70%, transparent);
+    max-width: 34ch;
+  }
+
+  .process__cta {
+    margin-top: clamp(2rem, 4vw, 3.5rem);
   }
 </style>

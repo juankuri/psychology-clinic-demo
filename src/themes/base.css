@@ -112,6 +112,18 @@ button {
   background-color: var(--color-bg-alt);
 }
 
+.section--dark {
+  background-color: var(--color-dark, #1f2937);
+  color: var(--color-bg);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--color-bg);
+}
+
 /* === Typography === */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
@@ -166,17 +178,72 @@ p {
   font-size: var(--text-lg);
 }
 
+.section-header .eyebrow {
+  margin-bottom: var(--space-sm);
+}
+
+/* Left-aligned header variant (used beside asymmetric layouts) */
+.section-header--start {
+  text-align: left;
+  max-width: 40rem;
+  margin-inline: 0;
+}
+
+.section-header--start p {
+  margin-inline: 0;
+}
+
+/* === Section lead (left-aligned editorial intro) === */
+.section-lead {
+  max-width: 44rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.section-lead .eyebrow {
+  margin-bottom: var(--space-md);
+}
+
+.section-lead h2 {
+  font-size: var(--text-3xl);
+}
+
+.section-lead__sub {
+  margin-top: var(--space-md);
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  max-width: 40ch;
+}
+
+/* Centered variant — used to vary the vertical rhythm between sections */
+.section-lead--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.section-lead--center .eyebrow {
+  justify-content: center;
+}
+
+.section-lead--center .section-lead__sub {
+  margin-inline: auto;
+}
+
 /* === Button === */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-xl);
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.85em 1.6em;
   border-radius: var(--radius-md);
   font-size: var(--text-base);
   font-weight: 600;
+  line-height: 1.1;
   text-align: center;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
   cursor: pointer;
 }
 
@@ -205,6 +272,24 @@ p {
 .btn--outline:hover {
   background-color: var(--color-primary);
   color: white;
+}
+
+/* WhatsApp green — the conversion action */
+.btn--wa {
+  background-color: var(--color-wa, #25a65b);
+  color: #fff;
+  border-radius: var(--radius-full);
+  box-shadow: 0 10px 22px -12px rgba(37, 166, 91, 0.6);
+}
+
+.btn--wa:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px -12px rgba(37, 166, 91, 0.65);
+}
+
+.btn--pill {
+  border-radius: var(--radius-full);
 }
 
 /* === Responsive grid === */

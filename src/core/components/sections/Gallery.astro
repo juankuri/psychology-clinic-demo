@@ -1,31 +1,21 @@
 ---
-import { loadGallery } from '../../utils/content';
 import { getSectionHeading } from '../../utils/manifest';
-
-const items = await loadGallery();
-if (items.length === 0) return;
+import ImageSlot from '../ui/ImageSlot.astro';
+import type { ImageSlotName } from '../../../types/manifest';
 
 const heading = getSectionHeading('gallery');
+const slots: ImageSlotName[] = ['gallery-1', 'gallery-2', 'gallery-3'];
 ---
 
 <section class="gallery section" id="gallery" aria-labelledby="gallery-heading">
   <div class="container">
-    <div class="section-header">
+    <div class="section-lead">
+      <span class="eyebrow">El espacio</span>
       <h2 id="gallery-heading">{heading}</h2>
     </div>
     <div class="gallery__grid">
-      {items.map((item) => (
-        <figure class="gallery__item">
-          <img
-            src={item.src}
-            alt={item.alt}
-            loading="lazy"
-            decoding="async"
-            width="600"
-            height="400"
-          />
-          {item.caption && <figcaption>{item.caption}</figcaption>}
-        </figure>
+      {slots.map((slot) => (
+        <ImageSlot name={slot} ratio="3 / 4" class="gallery__item" />
       ))}
     </div>
   </div>
@@ -34,43 +24,11 @@ const heading = getSectionHeading('gallery');
 <style>
   .gallery__grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
     gap: var(--space-md);
   }
 
-  @media (min-width: 640px) {
-    .gallery__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .gallery__grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-  }
-
   .gallery__item {
-    overflow: hidden;
-    border-radius: var(--radius-md);
-  }
-
-  .gallery__item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    aspect-ratio: 3 / 2;
-    transition: transform var(--transition-base);
-  }
-
-  .gallery__item:hover img {
-    transform: scale(1.03);
-  }
-
-  .gallery__item figcaption {
-    padding: var(--space-sm) var(--space-md);
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    background: var(--color-bg-alt);
+    box-shadow: var(--shadow-sm);
   }
 </style>

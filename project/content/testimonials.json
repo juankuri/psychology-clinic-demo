@@ -1,17 +1,12 @@
 [
   {
-    "name": "Ana G.",
-    "role": "Paciente",
-    "quote": "[DEMO] La terapia me ayudó a entender mis patrones de ansiedad y a desarrollar herramientas reales para mi día a día."
+    "name": "Mamá de paciente",
+    "role": "Atención infantil",
+    "quote": "[EJEMPLO] Llegué sin saber qué esperar y desde el primer momento me sentí escuchada, sin juicios. Mi hijo pregunta cuándo volvemos."
   },
   {
-    "name": "Carlos M.",
-    "role": "Paciente",
-    "quote": "[DEMO] Después de meses sintiéndome estancado, las sesiones con la Dra. López me dieron claridad y dirección."
-  },
-  {
-    "name": "Laura y Pedro",
-    "role": "Terapia de pareja",
-    "quote": "[DEMO] Aprendimos a comunicarnos de verdad. Nuestra relación mejoró mucho desde que empezamos la terapia."
+    "name": "Paciente",
+    "role": "Terapia individual",
+    "quote": "[EJEMPLO] El espacio transmite una paz que ayuda muchísimo. Encontré acompañamiento real para trabajar lo que traía cargando hace años."
   }
 ]

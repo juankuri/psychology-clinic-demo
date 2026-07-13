@@ -1,15 +1,72 @@
-/* Professional Clean theme
-   Sharp, trustworthy, generous spacing.
-   System sans-serif fonts. Muted palette. */
+/* Professional Clean — Warm variant
+   Calm, editorial, grotesk-only. Left-aligned rhythm, hairline rules,
+   generous type. Terracotta / mustard / sage on warm cream. */
 
 :root[data-theme='professional'] {
-  --font-heading: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Schibsted Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
 
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
+  /* Warm palette */
+  --color-bg: #FBF7F1;
+  --color-bg-alt: #F3EBDD;
+  --color-bg-warm: #F6EADA;
+  --color-text: #33302B;
+  --color-text-muted: #6E675C;
+  --color-border: rgba(58, 53, 46, 0.14);
 
-  --color-bg-alt: #f5f7fa;
-  --color-border: #e2e5ea;
+  --color-primary: #BE6A45;
+  --color-primary-dark: #A5583A;
+  --color-accent: #D8A548;
+  --color-accent-soft: #E7C98B;
+  --color-sage: #8E9C7C;
+  --color-dark: #2B2822;
+
+  /* WhatsApp */
+  --color-wa: #25A65B;
+  --color-wa-dark: #1E8B4B;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 999px;
+
+  --shadow-sm: 0 10px 26px -20px rgba(58, 53, 46, 0.5);
+  --shadow-md: 0 20px 44px -26px rgba(58, 53, 46, 0.5);
+  --shadow-lg: 0 34px 60px -30px rgba(58, 53, 46, 0.45);
+
+  --rule: 1px solid var(--color-border);
+}
+
+/* Headings — tight, semibold grotesk */
+:root[data-theme='professional'] h1,
+:root[data-theme='professional'] h2,
+:root[data-theme='professional'] h3,
+:root[data-theme='professional'] h4 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Accent = same font, terracotta colour only */
+:root[data-theme='professional'] .accent {
+  color: var(--color-primary);
+}
+
+/* Eyebrow label above section headings */
+:root[data-theme='professional'] .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+/* A short terracotta tick used before eyebrow labels */
+:root[data-theme='professional'] .eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: var(--color-accent);
 }

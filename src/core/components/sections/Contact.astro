@@ -1,78 +1,150 @@
 ---
 import { getManifest, getSectionHeading, getSectionSubtitle } from '../../utils/manifest';
 import WhatsAppCTA from '../ui/WhatsAppCTA.astro';
+import ImageSlot from '../ui/ImageSlot.astro';
 
 const manifest = getManifest();
 const { contact, location } = manifest;
 const heading = getSectionHeading('contact');
 const subtitle = getSectionSubtitle('contact');
+
+const digits = contact.whatsapp.number.replace(/\D/g, '');
+const waDisplay = digits.length === 10
+  ? `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`
+  : contact.whatsapp.number;
 ---
 
-<section class="contact section section--alt" id="contact" aria-labelledby="contact-heading">
+<section class="contact section" id="contact" aria-labelledby="contact-heading">
   <div class="container">
-    <div class="section-header">
-      <h2 id="contact-heading">{heading}</h2>
-      {subtitle && <p>{subtitle}</p>}
+    <div class="banner">
+      <h2 id="contact-heading" class="banner__title">
+        Tu bienestar puede empezar hoy, con un solo <span class="accent-light">mensaje</span>.
+      </h2>
+      {subtitle && <p class="banner__text">{subtitle}</p>}
+      <WhatsAppCTA class="banner__cta" label="Escríbeme por WhatsApp" />
     </div>
-    <div class="contact__content">
-      <div class="contact__cta">
-        <WhatsAppCTA />
+
+    <div class="place">
+      <div class="place__info">
+        <span class="eyebrow">Ubicación y horarios</span>
+        <h3 class="place__title">{heading}</h3>
+        <dl class="place__list">
+          <div class="place__row">
+            <dt>Consultorio</dt>
+            <dd>
+              {location.googleMapsUrl ? (
+                <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer">{location.address}</a>
+              ) : (
+                location.address
+              )}
+            </dd>
+          </div>
+          <div class="place__row">
+            <dt>Horarios</dt>
+            <dd>Atención con cita previa. Escríbeme para conocer la disponibilidad de esta semana.</dd>
+          </div>
+          <div class="place__row">
+            <dt>WhatsApp</dt>
+            <dd>{waDisplay}</dd>
+          </div>
+        </dl>
+        <WhatsAppCTA class="btn--wa" label="Agenda tu visita" />
       </div>
-      <div class="contact__info">
-        {contact.phone && (
-          <p>
-            <strong>Tel:</strong>{' '}
-            <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
-          </p>
-        )}
-        {contact.email && (
-          <p>
-            <strong>Email:</strong>{' '}
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </p>
-        )}
-        <p>
-          {location.googleMapsUrl ? (
-            <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-              {location.address}
-            </a>
-          ) : (
-            location.address
-          )}
-        </p>
+      <div class="place__map">
+        <ImageSlot name="map" ratio="4 / 3" maxWidth="440px" align="end" class="place__map-img" />
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .contact__content {
-    max-width: 36rem;
-    margin-inline: auto;
+  .banner {
+    padding: clamp(2.75rem, 6vw, 5.5rem) clamp(1.5rem, 5vw, 4.5rem);
+    border-radius: var(--radius-lg);
+    background: radial-gradient(130% 130% at 12% 0%, var(--color-accent) 0%, var(--color-primary) 52%, var(--color-primary-dark) 100%);
+    color: #fff;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
     text-align: center;
+  }
+
+  .banner__title {
+    color: #fff;
+    font-size: var(--text-3xl);
+    max-width: 20ch;
+    margin-inline: auto;
+    margin-bottom: var(--space-md);
+  }
+
+  .accent-light {
+    color: var(--color-accent-soft);
+  }
+
+  .banner__text {
+    max-width: 40ch;
+    margin: 0 auto var(--space-xl);
+    color: color-mix(in srgb, #fff 86%, transparent);
+    font-size: var(--text-lg);
+  }
+
+  .banner__cta {
+    background: #fff;
+    color: var(--color-primary-dark);
+    border-radius: var(--radius-full);
+    box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.4);
+  }
+
+  .banner__cta:hover {
+    transform: translateY(-1px);
+  }
+
+  .place {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 820px) {
+    .place {
+      grid-template-columns: 1fr minmax(0, 0.8fr);
+    }
+  }
+
+  .place__info {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xl);
+    align-items: flex-start;
   }
 
-  .contact__info {
+  .place__title {
+    font-size: var(--text-2xl);
+    margin-block: var(--space-sm) var(--space-xl);
+  }
+
+  .place__list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
-    font-size: var(--text-base);
+    gap: var(--space-lg);
+    margin: 0 0 var(--space-xl);
   }
 
-  .contact__info p {
-    max-width: none;
-  }
-
-  .contact__info a {
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  .contact__info a:hover {
+  .place__row dt {
+    font-weight: 700;
     color: var(--color-text);
+    margin-bottom: 2px;
+  }
+
+  .place__row dd {
+    margin: 0;
+    color: var(--color-text-muted);
+    max-width: 40ch;
+  }
+
+  .place__row a {
+    color: var(--color-primary);
+  }
+
+  .place__map-img {
+    box-shadow: var(--shadow-md);
   }
 </style>

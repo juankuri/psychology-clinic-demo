@@ -2,62 +2,78 @@
 import { getManifest, getNavLabel } from '../utils/manifest';
 
 const manifest = getManifest();
-const { business, sections } = manifest;
+const { business } = manifest;
 
-const navSections = sections
-  .filter((s) => s.id !== 'hero' && s.id !== 'trust')
-  .map((s) => ({
-    id: s.id,
-    label: getNavLabel(s.id),
-  }));
+const navIds = ['about', 'services', 'benefits', 'process', 'gallery', 'testimonials', 'faq', 'contact'] as const;
+const navItems = manifest.sections
+  .filter((s) => navIds.includes(s.id as (typeof navIds)[number]))
+  .map((s) => ({ id: s.id, label: getNavLabel(s.id) }))
+  .filter((item) => item.label);
 ---
 
 <header class="header">
   <div class="container header__inner">
-    <a href="/" class="header__brand" aria-label={`${business.name} — Inicio`}>
-      {business.logo ? (
-        <img src={business.logo} alt={business.name} class="header__logo" width="40" height="40" />
-      ) : (
-        <span class="header__name">{business.name}</span>
+    <a href="#top" class="header__brand" aria-label={`${business.name} — Inicio`}>
+      {business.logo && (
+        <img src={business.logo} alt="" class="header__logo" width="40" height="40" aria-hidden="true" />
       )}
+      <span class="header__text">
+        <span class="header__name">{business.name}</span>
+        {business.tagline && <span class="header__tagline">{business.tagline}</span>}
+      </span>
     </a>
 
-    <button
-      class="header__toggle"
-      aria-expanded="false"
-      aria-controls="main-nav"
-      aria-label="Menu"
-    >
-      <span class="header__toggle-bar"></span>
-      <span class="header__toggle-bar"></span>
-      <span class="header__toggle-bar"></span>
-    </button>
+    {navItems.length > 0 && (
+      <nav class="header__nav" aria-label="Navegación principal">
+        <ul class="header__nav-list">
+          {navItems.map((item) => (
+            <li><a href={`#${item.id}`}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    )}
 
-    <nav class="header__nav" id="main-nav" aria-label="Navigation">
-      {navSections.map((item) => (
-        <a href={`#${item.id}`} class="header__link">
-          {item.label}
-        </a>
-      ))}
-    </nav>
+    {navItems.length > 0 && (
+      <button
+        type="button"
+        class="header__toggle"
+        aria-expanded="false"
+        aria-controls="header-mobile-nav"
+        aria-label="Abrir menú"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    )}
   </div>
+
+  {navItems.length > 0 && (
+    <nav id="header-mobile-nav" class="header__mobile-nav" aria-label="Navegación móvil" hidden>
+      <ul>
+        {navItems.map((item) => (
+          <li><a href={`#${item.id}`}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  )}
 </header>
 
 <script>
-  const toggle = document.querySelector('.header__toggle');
-  const nav = document.querySelector('.header__nav');
+  const toggle = document.querySelector<HTMLButtonElement>('.header__toggle');
+  const mobileNav = document.querySelector<HTMLElement>('#header-mobile-nav');
 
-  if (toggle && nav) {
+  if (toggle && mobileNav) {
     toggle.addEventListener('click', () => {
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!isOpen));
-      nav.classList.toggle('header__nav--open');
+      mobileNav.hidden = isOpen;
     });
 
-    nav.querySelectorAll('.header__link').forEach((link) => {
+    mobileNav.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         toggle.setAttribute('aria-expanded', 'false');
-        nav.classList.remove('header__nav--open');
+        mobileNav.hidden = true;
       });
     });
   }
@@ -68,107 +84,138 @@ const navSections = sections
     position: sticky;
     top: 0;
     z-index: 50;
-    background-color: var(--color-bg);
+    background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
-    padding-block: var(--space-md);
+    padding-block: var(--space-sm);
   }
 
   .header__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-lg);
-    flex-wrap: wrap;
+    gap: var(--space-md);
   }
 
   .header__brand {
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .header__logo {
     height: 2.5rem;
     width: auto;
+    flex-shrink: 0;
+  }
+
+  .header__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
   }
 
   .header__name {
     font-family: var(--font-heading);
     font-weight: 700;
+    letter-spacing: -0.01em;
     font-size: var(--text-lg);
+    color: var(--color-text);
   }
 
-  .header__toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: var(--space-sm);
-    cursor: pointer;
-  }
-
-  .header__toggle-bar {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-text);
-    border-radius: 1px;
-    transition: transform var(--transition-fast), opacity var(--transition-fast);
-  }
-
-  .header__toggle[aria-expanded='true'] .header__toggle-bar:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-  }
-
-  .header__toggle[aria-expanded='true'] .header__toggle-bar:nth-child(2) {
-    opacity: 0;
-  }
-
-  .header__toggle[aria-expanded='true'] .header__toggle-bar:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+  .header__tagline {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .header__nav {
     display: none;
-    flex-direction: column;
-    gap: var(--space-sm);
-    width: 100%;
-    padding-top: var(--space-md);
-    border-top: 1px solid var(--color-border);
-    font-size: var(--text-base);
   }
 
-  .header__nav--open {
+  .header__nav-list {
     display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
-  .header__link {
+  .header__nav-list a {
+    font-size: 0.8rem;
+    font-weight: 600;
     color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .header__nav-list a:hover {
+    color: var(--color-text);
+  }
+
+  .header__toggle {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .header__toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: var(--radius-full);
+  }
+
+  .header__mobile-nav {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .header__mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header__mobile-nav a {
+    display: block;
     padding: var(--space-sm) 0;
-    transition: color var(--transition-fast);
+    font-weight: 600;
+    color: var(--color-text);
   }
 
-  .header__link:hover {
-    color: var(--color-primary);
-  }
+  @media (min-width: 900px) {
+    .header__nav {
+      display: block;
+    }
 
-  @media (min-width: 768px) {
     .header__toggle {
       display: none;
     }
+  }
 
-    .header__nav {
-      display: flex;
-      flex-direction: row;
-      width: auto;
-      padding-top: 0;
-      border-top: none;
-      gap: var(--space-lg);
-      font-size: var(--text-sm);
-    }
-
-    .header__link {
-      padding: 0;
+  @media (max-width: 520px) {
+    .header__tagline {
+      display: none;
     }
   }
 </style>
