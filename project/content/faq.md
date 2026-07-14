@@ -1,19 +1,19 @@
 # Preguntas frecuentes
 
 ## ¿Atiendes a niños y adolescentes?
-Sí. El acompañamiento a la infancia y la adolescencia es una parte central de mi trabajo, incluyendo procesos con niñas y niños neurodivergentes. También trabajo de la mano con las familias.
+Sí, es una parte central de mi trabajo, incluyendo procesos con niñas y niños neurodivergentes. Cuando el caso lo requiere, coordino también con la escuela y con la familia.
 
 ## ¿Las sesiones son presenciales?
-Sí, la atención es presencial en el consultorio, en un espacio pensado para que te sientas en calma y con privacidad. Si necesitas otra modalidad, escríbeme y lo vemos.
+Sí, en el consultorio de Villa Serena. Si por alguna razón necesitas otra modalidad, escríbeme y lo revisamos.
 
 ## ¿Cómo agendo mi primera cita?
-Es muy sencillo: me escribes por WhatsApp, revisamos juntos la disponibilidad y agendamos tu primera sesión de conocimiento. No necesitas preparar nada de antemano.
+Me escribes por WhatsApp, te comparto horarios disponibles y agendamos. No necesitas preparar nada antes de la primera sesión.
 
 ## ¿Cuánto dura una sesión?
-Cada sesión está pensada para darte el tiempo y el espacio necesarios sin sentir prisa. Te comparto la duración exacta y cómo trabajamos cuando me escribas.
+Depende del tipo de terapia y de la edad de quien la recibe. Te doy la duración exacta cuando agendemos.
 
 ## ¿Tiene costo la valoración inicial?
-Prefiero comentarte las tarifas actualizadas de forma directa y transparente por WhatsApp, según el tipo de acompañamiento que necesites tú o tu familia.
+Sí. Te comparto las tarifas actualizadas por WhatsApp según el tipo de acompañamiento que necesites.
 
 ## ¿Necesito saber qué me pasa antes de empezar?
-Para nada. No hace falta que llegues con las palabras exactas ni con un diagnóstico. Ese proceso de comprender lo que sientes lo hacemos juntos, a tu ritmo.
+No. Muchas personas llegan sin un diagnóstico claro o sin saber cómo explicar lo que sienten — parte de la primera sesión es justamente ir entendiéndolo juntos.

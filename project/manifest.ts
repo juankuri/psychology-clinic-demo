@@ -10,9 +10,9 @@ export const manifest: ProjectManifest = {
     name: 'Luna Marín',
     tagline: 'Psicología Clínica y Educativa',
     locality: 'Villa Serena, México',
-    heroTitle: 'Un espacio que *crece* contigo.',
+    heroTitle: 'Psicología para niños, adolescentes y familias en *Villa Serena*.',
     description:
-      'Acompañamiento psicológico cálido y profesional para niños, adolescentes y familias, con especial sensibilidad hacia la neurodivergencia. Terapia sin juicios, a tu propio ritmo.',
+      'Atiendo procesos de infancia, adolescencia y adultez, con experiencia particular en autismo y neurodivergencia. Sesiones presenciales, sin diagnósticos apresurados.',
   },
 
   contact: {
@@ -34,8 +34,8 @@ export const manifest: ProjectManifest = {
   theme: {
     preset: 'professional',
     tokens: {
-      colorPrimary: '#BE6A45',
-      colorAccent: '#D8A548',
+      colorPrimary: '#3E2A1B',
+      colorAccent: '#C97C45',
     },
   },
 
@@ -53,7 +53,7 @@ export const manifest: ProjectManifest = {
   seo: {
     title: 'Luna Marín — Psicología Clínica y Educativa en Villa Serena',
     description:
-      'Acompañamiento psicológico cálido y profesional para niños, adolescentes y familias, con enfoque en neurodivergencia y autismo.',
+      'Psicóloga clínica y educativa en Villa Serena. Atención a niños, adolescentes y adultos, con formación en autismo y neurodivergencia.',
     canonicalUrl: 'https://demo-psicologia.example.com',
     ogImage: '/og-image.jpg',
     locale: 'es-MX',
@@ -62,19 +62,19 @@ export const manifest: ProjectManifest = {
   sections: [
     { id: 'hero' },
     { id: 'trust' },
-    { id: 'about', heading: 'Acompaño procesos, no impongo diagnósticos.' },
+    { id: 'about', heading: 'Acompañamiento completo en los procesos con mis pacientes.' },
     {
       id: 'services',
       heading: '¿En qué puedo acompañarte?',
       subtitle: 'Cada persona y cada familia llega con algo distinto. Estos son los espacios donde puedo caminar contigo.',
     },
-    { id: 'benefits', heading: 'Terapia que se siente humana' },
+    { id: 'benefits', heading: 'Cómo trabajo contigo' },
     {
       id: 'process',
-      heading: 'Dar el primer paso es más simple de lo que crees',
+      heading: 'Así empieza tu primera sesión',
       subtitle: 'No necesitas tener las palabras exactas ni saber por dónde empezar. Solo escríbeme.',
     },
-    { id: 'gallery', heading: 'Un consultorio hecho para respirar' },
+    { id: 'gallery', heading: 'Conoce el consultorio' },
     {
       id: 'testimonials',
       heading: 'Lo que sienten quienes ya empezaron',

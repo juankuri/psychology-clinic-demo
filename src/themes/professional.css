@@ -7,16 +7,16 @@
   --font-body: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
 
   /* Warm palette */
-  --color-bg: #FBF7F1;
-  --color-bg-alt: #F3EBDD;
+  --color-bg: #FAF5EA;
+  --color-bg-alt: #F2E8D8;
   --color-bg-warm: #F6EADA;
-  --color-text: #33302B;
-  --color-text-muted: #6E675C;
+  --color-text: #2C2118;
+  --color-text-muted: #6D6459;
   --color-border: rgba(58, 53, 46, 0.14);
 
-  --color-primary: #BE6A45;
-  --color-primary-dark: #A5583A;
-  --color-accent: #D8A548;
+  --color-primary: #3E2A1B;
+  --color-primary-dark: #2A1B10;
+  --color-accent: #C97C45;
   --color-accent-soft: #E7C98B;
   --color-sage: #8E9C7C;
   --color-dark: #2B2822;
